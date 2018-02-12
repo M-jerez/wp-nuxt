@@ -30,7 +30,7 @@ if (!defined('DB_PASSWORD')) {
 	define('DB_PASSWORD', 'NFtDYj7yf6Dio7X8');
 }
 if (!defined('DB_HOST')) {
-	define('DB_HOST', 'localhost');
+	define('DB_HOST', '127.0.0.1:3306');
 }
 
 /** Database Charset to use in creating database tables. */
@@ -88,16 +88,16 @@ define('WPLANG', '');
  * These are required because wordpress is installed in a subdirectory.
  */
 if (!defined('WP_SITEURL')) {
-	define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . '/wordpress');
+	define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT'].'/wordpress');
 }
 if (!defined('WP_HOME')) {
-	define('WP_HOME',    'http://' . $_SERVER['SERVER_NAME'] . '');
+	define('WP_HOME',    'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT']);
 }
 if (!defined('WP_CONTENT_DIR')) {
 	define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
 }
 if (!defined('WP_CONTENT_URL')) {
-	define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/content');
+	define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT']. '/content');
 }
 
 
