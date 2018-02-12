@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cpx './theme/**/*' './wp-test-instance/content/themes/wp-nuxt/' --watch"
+    "copytheme": "cpx './theme/**/*' './wp-test-instance/content/themes/wp-nuxt/' --watch --verbose",
+    "wp-server": "cd wp-test-instance && php -S localhost:8000",
+    "dev": "concurrently --kill-others 'npm run copytheme' 'npm run wp-server'"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/M-jerez/wp-nuxt#readme",
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "cpx": "^1.5.0"
   }
 }
