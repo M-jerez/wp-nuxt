@@ -1,0 +1,21 @@
+{
+	"wpVer": "4.9.4",
+	"url": "http://wp-nuxt.test",
+	"tablePrefix": "wp_",
+	"dbHost": "localhost",
+	"dbName": "wp-nuxt-test",
+	"dbUser": "wp-nuxt-test",
+	"dbPass": "NFtDYj7yf6Dio7X8",
+	"git": false,
+	"customDirs": true,
+	"wpDir": "wordpress",
+	"contentDir": "content",
+	"installTheme": true,
+	"themeDir": "wp-nuxt",
+	"themeType": "git",
+	"themeTaskRunner": "grunt",
+	"themeUser": "M-jerez",
+	"themeRepo": "wp-nuxt",
+	"themeBranch": "master",
+	"saltKeys": "define('AUTH_KEY',         '0Pt~;b^>CS)-/[*|y6w-T65lqt{0/)fsq5*]v>-@5HU}/{IdU&T=cgMQ)0n|KR0M');\ndefine('SECURE_AUTH_KEY',  'a^|X;kR]<1W!gX?6Uc{hp|S9^bDlxVTLEG $!avkEX{L@w+ZnJ6BZeATah62gfc#');\ndefine('LOGGED_IN_KEY',    '%)C}dr&@pMb^g)cmx^{La9z,BtY5L@21L%IPU3cwJzG-N;<*4:Oc8a2_?pI;~Dq]');\ndefine('NONCE_KEY',        'h^+.BuMT)_QKiQ48WMtj}bIRr(NnLN^1x5hm}idGN!XF<c`bG2)}dx/bIx/*7Z&E');\ndefine('AUTH_SALT',        '<4nO.k2YVrf3/%M?EJ24^w xfAs8a[ON>E2FHO%/L`b}beVExLQ}_h44B|ZXc5P#');\ndefine('SECURE_AUTH_SALT', '%( o6udAU6ZPA:d)UjAKK=pJxc|QM=<~rmnJ])/t5BSkKKkj+r]/~A}|]ezq/ng|');\ndefine('LOGGED_IN_SALT',   '& M:COj~TUL@o}]a?8-/&q[V|c1h(/2eS+^s,5)8>Fn^UwG`z1v[ss?mb*>;6bXR');\ndefine('NONCE_SALT',       'nCnaU^V0?e(AI1]K*.,b~YjpjDCZ1>dz048U4sGM#0W]0@@MgsY59IDuh:]8CtFZ');\n"
+}
