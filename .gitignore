@@ -39,6 +39,7 @@ Thumbs.db
 
 # Folders #
 ######################
+wp-test-instance/content/themes/wp-nuxt/
 nbproject/
 node_modules/
 cgi-bin/
