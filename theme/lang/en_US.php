@@ -5,11 +5,11 @@
 */ 
 return array( 
 
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/functions.php : line 30 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/functions.php : line 29 */
 "wp-nuxt cant read the config file at <code>%s</code>"
 =>
 ""
-,/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/utils.php : line 45 */
+,/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/utils.php : line 33 */
 "wp-nuxt-config.php error. config['%'] missing from the config file!"
 =>
 ""

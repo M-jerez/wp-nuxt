@@ -9,6 +9,7 @@
 use \wpnuxt\utils;
 
 if ( is_admin() ) {
+
 	include __DIR__ . "/tools/i18nMessages.php";
 	include __DIR__ . "/modules/cache.php";
 	include __DIR__ . "/modules/node_nuxt.php";
@@ -19,19 +20,25 @@ if ( is_admin() ) {
 
 	//adds very basic internationalization functionality to the theme.
 	// wp __()  and pot files are too complicated to mantain.
+	// this library uses he functions p() and g() to print and get the translates messages;
 	// docs : https://github.com/M-jerez/php-translation
 	i18nMessages::setLocale( get_locale() );
 
-	$wpnc_file  = __DIR__ . "/admin/wp-nuxt-config.php";
-	$wpn_config = include( $wpnc_file );
-	$wpn_config = false;
+
+	// loads the config file
+	$config_file  = __DIR__ . "/admin/wp-nuxt-config.php";
+	$module_names = array( "cache", "node_nuxt", "rest", "sitemap" );
+	$wpn_config   = include( $config_file );
+
+
 	if ( ! $wpn_config ) {
 
-		utils::admin_error( g( "wp-nuxt cant read the config file at <code>%s</code>", $wpnc_file ));
-	} else if ( utils::check_modules_config(
-		$wpn_config,
-		array( "cache", "node_nuxt", "rest", "sitemap" )
-	) ) {
+		$erro_message = g( "wp-nuxt cant read the config file at <code>%s</code>", $config_file );
+		utils::admin_error( $erro_message );
+
+	} else if ( utils::check_modules_config( $wpn_config, $module_names ) ) {
+
+		// if all cofiguration is correct loads the modules
 		new \wpnuxt\cache( $wpn_config['cache'] );
 		new \wpnuxt\node_nuxt( $wpn_config['node_nuxt'] );
 		new \wpnuxt\rest( $wpn_config['rest'] );
