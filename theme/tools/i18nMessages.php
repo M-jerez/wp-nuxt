@@ -12,7 +12,7 @@ class i18nMessages {
    
 
     //const pattern = "/\sp\(.*\)/";
-    const copyright = "/** \n* This file is generated with 'i18nMessages.php' \n* Website: http://github.com/M-jerez/ \n* Author : m-jerez \n*/";
+    const copyright = "/** \n* This file is generated with 'i18nMessages.php' \n* Website: http://github.com/M-jerez/php-translation \n*/";
     const languagesDir = 'lang';
     const systemDir = 'system';
     const phpExtension = '.php';
@@ -229,7 +229,7 @@ class i18nMessages {
                 $filename = $value[1];
                 $linenum = $value[2];
                 $del = $value[3];
-                $userfile .= "\n/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
+                $userfile .= "/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
                 $this->systemTranslations[$lang][$message] = $value;
             }
             $userfile .= "\n);";
@@ -305,7 +305,7 @@ function g($string){
     if (count(func_get_args()) > 1) {
         $args = func_get_args();
         unset($args[0]);
-        return sprintf($messages->getMessage($string), $args);
+        return vsprintf($messages->getMessage($string), $args);
     } else {
         return $messages->getMessage($string);
     }

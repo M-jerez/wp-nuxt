@@ -20,10 +20,6 @@ class rest {
 
 	private  $c;
 	function __construct($config){
-		if(!$config){
-			utils::admin_error("wp-nuxt-config.php error. \$config['rest'] missing from the config file!");
-			return;
-		}
 		$this->c = $config;
 		add_action( 'rest_endpoints', array( $this, 'remove_users_endpoint' ) );
 		add_action( 'rest_api_init', array( $this, 'add_menus_endpoint' ) );

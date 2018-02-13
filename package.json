@@ -8,7 +8,7 @@
     "copytheme": "cpx './theme/**/*' './wp-test-instance/content/themes/wp-nuxt/' --watch --verbose",
     "wp-server": "cd wp-test-instance && php -S localhost:8000",
     "php_translation": "php -f theme/tools/generate_translation_files.php",
-    "dev": "concurrently --kill-others 'npm run copytheme' 'npm run wp-server' 'npm run php_translation'"
+    "dev": "concurrently --kill-others 'npm run copytheme' 'npm run wp-server'"
   },
   "repository": {
     "type": "git",

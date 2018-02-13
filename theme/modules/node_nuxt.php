@@ -14,10 +14,6 @@ class node_nuxt {
 
 	private  $c;
 	function __construct($config){
-		if(!$config){
-			utils::admin_error("wp-nuxt-config.php error. \$config['node_nuxt'] missing from the config file");
-			return;
-		}
 		$this->c = $config;
 
 	}

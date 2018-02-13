@@ -13,10 +13,6 @@ class cache {
 
 	private  $c;
 	function __construct($config){
-		if(!$config){
-			utils::admin_error("wp-nuxt-config.php error. \$config['cache'] missing from the config file");
-			return;
-		}
 		$this->c = $config;
 
 	}
