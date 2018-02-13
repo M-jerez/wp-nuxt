@@ -5,23 +5,19 @@
  * Date: 12/02/2018
  * Time: 17:24
  */
+
+header( "HTTP/1.0 405 Forbidden" );
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title> WP-NUXT | The theme functionality is disabled on this site </title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <style>
         body,html{
             background-color: #FFF;
-            f
-            ont-family: Lato, sans-serif;
+            font-family: Lato, sans-serif;
             height: 100%;
             width: 100%;
         }
@@ -35,21 +31,36 @@
             width: auto;
             height: 100vh;
         }
-        .valign-wrapper
+        .container{
+            max-width: 600px;
+            margin: auto;
+        }
+        .page_title{
+            font-size: 1.8rem;
+            font-weight: lighter;
+            margin: 0;
+        }
+        .valign-wrapper {
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            -webkit-box-align: center;
+
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-	<div class="row">
-		<div class="col s12">
-			<div class="valign-wrapper" id="content">
-                <div>
-                    <h4>Theme functionality is disabled on this site!</h4>
-                    <img src="<?php echo get_template_directory_uri();?>/screenshot.png" alt="wp-nuxt" class="logo">
-                </div>
-			</div>
-		</div>
-	</div>
+    <div class="valign-wrapper" id="content">
+        <div>
+            <h4 class="page_title">Theme functionality is disabled on this site!</h4>
+            <img src="<?php echo get_template_directory_uri();?>/screenshot.png" alt="wp-nuxt" class="logo">
+        </div>
+    </div>
 </div>
 </body>
 </html>
