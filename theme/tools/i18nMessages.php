@@ -128,15 +128,16 @@ class i18nMessages {
         $sorceFiles = self::rglob(self::$rootDir);
         
         foreach ($sorceFiles as $filename) {
-            if (__FILE__ == $filename)
+        	$rname = realpath($filename);
+            if (__FILE__ == $rname)
                 continue;
-            $content = file_get_contents($filename);
+            $content = file_get_contents($rname);
             $tokens = token_get_all($content);
             for ($index = 0; $index < count($tokens); $index++) {
                 $token = &$tokens[$index];
                 if(is_array($token) && $token[0] === T_STRING && ($token[1] === 'p' || $token[1] === 'g') ){
                     // this is the token of the 'p' function.
-                    $index = $this->scanMessage($tokens, $index, $filename, $token[2]);
+                    $index = $this->scanMessage($tokens, $index, $rname, $token[2]);
                 } 
             }
         }
@@ -177,8 +178,7 @@ class i18nMessages {
             $message = $tokens[$index][1];
             $this->setNewEntry($message, $lineNum, $shortFilename);
         }else{
-            trigger_error ("php variables are not alowed in messages to 
-                translate in $filename : line $lineNum", E_ERROR) ;
+            error_log ("i18nMessages error: php variables are not allowed in messages to translate in $filename : line $lineNum") ;
         }                 
         return $index;
     }
@@ -229,7 +229,7 @@ class i18nMessages {
                 $filename = $value[1];
                 $linenum = $value[2];
                 $del = $value[3];
-                $userfile .= "/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
+                $userfile .= "\n/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
                 $this->systemTranslations[$lang][$message] = $value;
             }
             $userfile .= "\n);";

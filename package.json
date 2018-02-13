@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "copytheme": "cpx './theme/**/*' './wp-test-instance/content/themes/wp-nuxt/' --watch --verbose",
     "wp-server": "cd wp-test-instance && php -S localhost:8000",
-    "dev": "concurrently --kill-others 'npm run copytheme' 'npm run wp-server'"
+    "php_translation": "php -f theme/tools/generate_translation_files.php",
+    "dev": "concurrently --kill-others 'npm run copytheme' 'npm run wp-server' 'npm run php_translation'"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/M-jerez/wp-nuxt#readme",
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
     "concurrently": "^3.5.1",
     "cpx": "^1.5.0"
   }
