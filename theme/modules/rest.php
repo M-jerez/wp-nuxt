@@ -7,6 +7,7 @@
  */
 
 namespace wpnuxt;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 define( "NUXT_PRESS_REST_NAME", __NAMESPACE__ . '/v1' );
 

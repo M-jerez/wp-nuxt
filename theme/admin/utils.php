@@ -7,31 +7,12 @@
  */
 
 namespace wpnuxt;
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class utils {
 
 
-	/**
-	 * Check the sections within the config file, just to double check
-	 *
-	 * @param $config
-	 * @param array $moduleNames
-	 *
-	 * @return bool
-	 */
-	static function check_modules_config( $config, $moduleNames = array() ) {
-		$ok = true;
-		foreach ( $moduleNames as $name ) {
-			if ( ! $config[ $name ] ) {
-				self::admin_error( g(
-					"wp-nuxt config error: configuration for module '%s' missing from the config file!", $name ) );
-				$ok = false;
-			}
-		}
 
-		return $ok;
-	}
 
 
 	/**

@@ -7,7 +7,7 @@
  */
 
 namespace wpnuxt;
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class cache {
 

@@ -6,6 +6,10 @@
  * Time: 15:30
  */
 
+
+
+(PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) && die('cli only');
+
 require_once __DIR__.'/i18nMessages.php';
 $messages = new i18nMessages();
 

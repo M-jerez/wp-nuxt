@@ -6,7 +6,6 @@
  * repo: https://github.com/M-jerez/php-translation
  */
 
-
 class i18nMessages {
     
    
@@ -229,7 +228,7 @@ class i18nMessages {
                 $filename = $value[1];
                 $linenum = $value[2];
                 $del = $value[3];
-                $userfile .= "/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
+                $userfile .= "\n/* $filename : line $linenum */\n$del$message$del\n=>\n$del$translated$del\n,";
                 $this->systemTranslations[$lang][$message] = $value;
             }
             $userfile .= "\n);";

@@ -4,6 +4,7 @@
 * Website: http://github.com/M-jerez/php-translation 
 */ 
 return array(
-"wp-nuxt cant read the config file at <code>%s</code>"=>array("","/Applications/AMPPS/www/mjerez/wp-nuxt/theme/functions.php",29,"\""),
+"wp-nuxt cant read the config file at <code>%s</code>"=>array("","/Applications/AMPPS/www/mjerez/wp-nuxt/theme/functions.php",38,"\""),
 "wp-nuxt-config.php error. config['%'] missing from the config file!"=>array("","/Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/utils.php",33,"\""),
+"wp-nuxt config error: configuration for module '%s' missing from the config file!"=>array("","/Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/utils.php",27,"\""),
 );
