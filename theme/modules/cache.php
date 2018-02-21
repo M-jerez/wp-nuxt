@@ -14,7 +14,6 @@ class cache {
 	private  $c;
 	function __construct($config){
 		$this->c = $config;
-
 	}
 
 }

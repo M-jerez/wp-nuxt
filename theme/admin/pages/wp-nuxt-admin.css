@@ -1,0 +1,26 @@
+html body{
+    background: #f1f1f1;
+}
+
+body p{
+    margin-bottom: 0;
+}
+.js .postbox .hndle{
+    cursor: default;
+}
+
+
+.postbox .info{
+    margin: 11px 0 0;
+    position: relative;
+    background: #f5f5f5;
+    display: block;
+    padding: 8px 12px 8px 32px;
+}
+
+.postbox .info > .dashicons-info{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -0.5em;
+}
