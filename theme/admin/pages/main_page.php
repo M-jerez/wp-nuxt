@@ -44,18 +44,21 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
 
                 <div class="form-group">
-                    <label class="form-switch">
-                        <input type="checkbox">
-                        <i class="form-icon"></i> <?php p( "Enabled" ) ?>
-                    </label>
+                    <div class="col-sm-12">
+                        <label class="form-switch">
+                            <input type="checkbox">
+                            <i class="form-icon"></i><?php p( "Automatic Static Site Generation" ) ?>
+                        </label>
+                        <br>
+                        <sub><?php p( "When Enabled, the <code>nuxt generate</code> command will be executed after a post is created, updated or deleted." ) ?></sub>
+                    </div>
                 </div>
+
             </div>
 
             <div class="info">
                 <p>
-					<?php p( "Nuxt.js is an static site generator: for more info please visit their <a href='https://nuxtjs.org/' target='_blank'>documentation.</a>" ) ?>
-                    <br>
-					<?php p( "When Enabled, the <code>nuxt generate</code> command will be executed after a post is saved." ) ?>
+					<?php p( "Configures Nuxt.js Static Site Generator: for more info about Nuxt.js please visit their <a href='https://nuxtjs.org/' target='_blank'>documentation.</a>" ) ?>
                 </p>
                 <span class="dashicons dashicons-info"></span>
             </div>
@@ -65,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div id="nuxt-config" class="postbox">
             <h2 class="hndle"><span><?php p( "Rest" ) ?></span></h2>
             <div class="inside form-horizontal">
-                <p>
+
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -76,8 +79,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </thead>
                     <tbody>
                     <tr>
-                        <td><code><?php echo get_rest_url() . NUXT_PRESS_REST_NAME ?>/menus</code></td>
-                        <td>List All available Menus</td>
+						<?php $url = get_rest_url() . NUXT_PRESS_REST_NAME . "/menus" ?>
+                        <td><a href="<?php echo $url ?>" target="_blank"><code><?php echo $url ?></code></a></td>
+                        <td><?php p( "List All WP Menus on the Rest API") ?><br><?php p("This Options Also Enables the WP Menus page on the Admin panel.") ?></td>
                         <td>
                             <label class="form-switch">
                                 <input type="checkbox">
@@ -86,8 +90,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                         </td>
                     </tr>
                     <tr>
-                        <td><code><?php echo get_rest_url() ?>wp/v2/user/<sup>*</sup></code></td>
-                        <td><span class="label label-error">Disable all user endpoints (better security)</span>
+						<?php $url = get_rest_url() . "wp/v2/users/" ?>
+                        <td><a href="<?php echo $url ?>" target="_blank"><code><?php echo $url ?></code></a></td>
+                        <td><span class="label label-error"><?php p( "Disable the endpoint to List all WP users (better security)")?></span>
                         </td>
                         <td>
                             <label class="form-switch">
@@ -98,17 +103,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </tr>
                     </tbody>
                 </table>
-                <br>
-                </p>
 
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="form-switch">
                             <input type="checkbox">
-                            <i class="form-icon"></i> <?php p( "REST API Caching" ) ?>
+                            <i class="form-icon"></i> <?php p( "Cache REST API Endpoints" ) ?>
                         </label>
                         <br>
-                        <sub><?php p( "Caches all REST endpoints, the cache is completely cleared after a post is modified" ); ?></sub>
+                        <sub><?php p( "When Enabled, all REST API endpoints will be cached, the cache is completely cleared after a post is modified" ); ?></sub>
                     </div>
                 </div>
 
