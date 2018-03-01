@@ -6,10 +6,13 @@
  * Time: 14:33
  */
 
+use wpnuxt\utils as utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$config = include(get_template_directory() ."/wp-nuxt-config.php");
 ?>
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php p( "Wp Nuxt Config" ) ?></h1>
@@ -17,25 +20,25 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div id="post-body" class="metabox-holder columns-2">
 
 
-        <div id="nuxt-config" class="postbox">
+        <form id="" class="postbox wp-nuxt-config-params">
             <h2 class="hndle"><span><?php p( "Nuxt" ) ?></span></h2>
             <div class="inside form-horizontal">
                 <div class="form-group">
                     <div class="col-3 col-sm-12">
-                        <label for="node-path"><?php p( "Node.js path" ) ?></label>
+                        <label for="nuxt[node_path]"><?php p( "Node.js path" ) ?></label>
                     </div>
                     <div class="col-9 col-sm-12">
-                        <input type="text" name="node-path" class="form-input" placeholder="/usr/local/lib/node">
+                        <input type="text" name="nuxt[node_path]" class="form-input" placeholder="/usr/local/lib/node" <?php echo utils::getConfigValueAttr($config["nuxt"]["node_path"]);?>>
                         <sub><?php p( "The path in the system to the node.js binary o executable file." ); ?></sub>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-3 col-sm-12">
-                        <label for="nux-path"><?php p( "Nuxt root path" ) ?>: </label>
+                        <label for="nuxt[nuxt_root_path]"><?php p( "Nuxt root path" ) ?>: </label>
                     </div>
                     <div class="col-9 col-sm-12">
-                        <input type="text" name="node-path" class="form-input"
-                               placeholder="/var/www/vhosts/my_nuxt_site/">
+                        <input type="text" name="nuxt[nuxt_root_path]" class="form-input"
+                               placeholder="/var/www/vhosts/my_nuxt_site/" <?php echo utils::getConfigValueAttr($config["nuxt"]["nuxt_root_path"]);?>>
                         <sub>
 							<?php p( "The root directory of the Nuxt project, <code>nuxt generate</code> command will be executed from this directory." ) ?>
 							<?php p( "This directory also contains the file <code>nuxt.config.js</code>" ) ?>
@@ -46,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="form-switch">
-                            <input type="checkbox">
+                            <input type="checkbox" name="nuxt[automatic_generation]" <?php echo utils::getConfigCheckedAttr($config["nuxt"]["automatic_generation"]);?>>
                             <i class="form-icon"></i><?php p( "Automatic Static Site Generation" ) ?>
                         </label>
                         <br>
@@ -62,10 +65,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </p>
                 <span class="dashicons dashicons-info"></span>
             </div>
-        </div>
+        </form>
 
 
-        <div id="nuxt-config" class="postbox">
+        <form id="rest-config" class="postbox  wp-nuxt-config-params">
             <h2 class="hndle"><span><?php p( "Rest" ) ?></span></h2>
             <div class="inside form-horizontal">
 
@@ -84,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <td><?php p( "List All WP Menus on the Rest API") ?><br><?php p("This Options Also Enables the WP Menus page on the Admin panel.") ?></td>
                         <td>
                             <label class="form-switch">
-                                <input type="checkbox">
+                                <input type="checkbox" name="rest[menus]" <?php echo utils::getConfigCheckedAttr($config["rest"]["menus"]);?>>
                                 <i class="form-icon"></i>
                             </label>
                         </td>
@@ -92,11 +95,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tr>
 						<?php $url = get_rest_url() . "wp/v2/users/" ?>
                         <td><a href="<?php echo $url ?>" target="_blank"><code><?php echo $url ?></code></a></td>
-                        <td><span class="label label-error"><?php p( "Disable the endpoint to List all WP users (better security)")?></span>
+                        <td><?php p( "Disable the endpoint to List all WP users")?> <span class="label label-error"><?php p( "(better security)")?></span>
                         </td>
                         <td>
                             <label class="form-switch">
-                                <input type="checkbox">
+                                <input type="checkbox" name="rest[disable_users]" <?php echo utils::getConfigCheckedAttr($config["rest"]["disable_users"]);?>>
                                 <i class="form-icon"></i>
                             </label>
                         </td>
@@ -107,7 +110,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label class="form-switch">
-                            <input type="checkbox">
+                            <input type="checkbox" name="rest[cache]" <?php echo utils::getConfigCheckedAttr($config["rest"]["cache"]);?>>
                             <i class="form-icon"></i> <?php p( "Cache REST API Endpoints" ) ?>
                         </label>
                         <br>
@@ -125,11 +128,19 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </p>
                 <span class="dashicons dashicons-info"></span>
             </div>
-        </div>
+        </form>
 
         <div class="save-action">
-            <span class="spinner is-active"></span>
-            <button class="button button-primary button-large" id="node-save">Save</button>
+            <a class="button button-primary button-large" href="#" id="wp-nuxt-save">Save</a>
+            <span class="spinner"></span>
         </div>
     </div>
 </div>
+<?php global $nonce_name, $themeURL; ?>
+<script>
+    var THEME_URL = "<?= $themeURL ?>";
+    var API_URL = "<?= home_url() ?>/wp-json/wp/v2/";
+    var AJAX_URL = "<?= admin_url('admin-ajax.php'); ?>";
+    var AJAX_SAVE_ACTION = "save-<?= $nonce_name ?>";
+    var ADMIN_URL = "<?= site_url() ?>/wp-admin/";
+</script>

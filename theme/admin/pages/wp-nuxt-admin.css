@@ -24,3 +24,8 @@ body p{
     top: 50%;
     margin-top: -0.5em;
 }
+
+
+.save-action .spinner{
+    float: none;
+}

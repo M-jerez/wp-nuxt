@@ -16,52 +16,52 @@ return array(
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 15 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 15 */
 "Wp Nuxt Config"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 20 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 20 */
 "Node.js"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 25 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 25 */
 "Node.js path"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 29 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 29 */
 "The path in the system to the node.js binary o executable file."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 40 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 40 */
 "Nuxt"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 44 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 44 */
 "Nuxt root path"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 49 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 49 */
 "The root directory of the Nuxt project, <code>nuxt generate</code> command will be executed from this directory."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 50 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 50 */
 "This directory contains the file <code>nuxt.config.js</code>"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 58 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 58 */
 "Enabled"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/main_page.php : line 65 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 65 */
 "Nuxt.js is an static site generator: for more info please visit their <a href='https://nuxtjs.org/' target='_blank'>documentation.</a>"
 =>
 ""

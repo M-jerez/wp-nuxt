@@ -3,12 +3,12 @@
 
 return array(
 	"rest" => array(
-		"cache"=>false,
+		"cache"=>true,
 		"menus"=>true,
 		"disable_users"=>true
 	),
 	"nuxt" => array(
-		"automatic_generation"=>false,
+		"automatic_generation"=>true,
 		"node_path"=>"/usr/local/lib/node",
 		"nuxt_root_path"=>""
 	),

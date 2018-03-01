@@ -7,9 +7,8 @@
  */
 
 namespace wpnuxt;
+use wpnuxt\utils as utils;
 if ( ! defined( 'ABSPATH' ) ) exit;
-
-define( "NUXT_PRESS_REST_NAME", __NAMESPACE__ . '/v2' );
 
 /**
  * Class rest
@@ -19,9 +18,11 @@ define( "NUXT_PRESS_REST_NAME", __NAMESPACE__ . '/v2' );
 class rest {
 
 
-	private  $c;
-	function __construct($config){
-		$this->c = $config;
+	private  $config;
+	function __construct(){
+		$this->config = utils::loadConfig();
+		if(!$this->config)
+			return;
 		add_action( 'rest_endpoints', array( $this, 'remove_users_endpoint' ) );
 		add_action( 'rest_api_init', array( $this, 'add_menus_endpoint' ) );
 	}

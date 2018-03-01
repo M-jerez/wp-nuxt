@@ -12,9 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class node_nuxt {
 
 
-	private  $c;
-	function __construct($config){
-		$this->c = $config;
+	private  $config;
+	function __construct(){
+		$this->config = utils::loadConfig();
+		if(!$this->config)
+			return;
 
 	}
 }

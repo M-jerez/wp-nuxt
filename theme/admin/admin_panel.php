@@ -17,15 +17,19 @@ class admin_panel {
 
 	public $nonce_name = 'wp-nuxt-nonce';
 	private $admin_page = null;
-
+	private $config = null;
 
 	function __construct() {
 		if ( ! is_admin() ) {
 			return;
 		}
+		$this->config = utils::loadConfig();
+		if(!$this->config)
+			return;
 		add_action( 'admin_init', array( $this, 'setNonce' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ), 999 );
+		add_action('wp_ajax_save-' . $this->nonce_name, array($this, 'saveSettings'));
 	}
 
 
@@ -40,11 +44,12 @@ class admin_panel {
 
 
 		wp_enqueue_script( 'wp-nuxt-admin', get_template_directory_uri(). '/admin/pages/wp-nuxt-admin.js', array( "jquery" ) );
-
+		wp_enqueue_script( 'toastjs', "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js", array( "jquery" ) );
 
 		wp_enqueue_style( 'wp-nuxt-admin', get_template_directory_uri() . '/admin/pages/wp-nuxt-admin.css' );
-		wp_enqueue_style( "jquery-ui", "https://unpkg.com/spectre.css/dist/spectre.min.css" );
-		wp_enqueue_style( "jquery-ui", "https://unpkg.com/spectre.css/dist/spectre-exp.min.css" );
+		wp_enqueue_style( "spectre", "https://unpkg.com/spectre.css/dist/spectre.min.css" );
+		wp_enqueue_style( "spectre-exp", "https://unpkg.com/spectre.css/dist/spectre-exp.min.css" );
+		wp_enqueue_style( "toastcss", "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" );
 	}
 
 
@@ -57,6 +62,8 @@ class admin_panel {
 			}
 		}
 	}
+
+
 
 
 	/**
@@ -75,8 +82,10 @@ class admin_panel {
 	}
 
 
-
-	function saveOption() {
+	/**
+	 * this must be an ajax call
+	 */
+	function saveSettings() {
 		$nonce = $_COOKIE[ $this->nonce_name ];
 
 
@@ -93,24 +102,20 @@ class admin_panel {
 
 		// ignore the request if the current user doesn't have
 		// sufficient permissions
-		if ( current_user_can( 'edit_posts' ) ) {
-			// get the submitted parameters
-			$menu    = $_POST['menu'];
-			$menu_id = $_POST['menu_id'];
+		if ( current_user_can( 'edit_posts' )) {
+			//TODO   update config
+			foreach ($this->config  as $key => $value ){
+				$subfield = $value;
+				foreach ($subfield  as $sub_key => $sub_value ){
+						if(isset($_POST[$key][$sub_key])){
+							$x = filter_var($_POST[$key][$sub_key], FILTER_SANITIZE_STRING);;
+							$this->config[$key][$sub_key] = utils::on_off_true_false($x);
+						}
 
-
-			if ( $menu && $menu_id ) {
-
-				$json = stripslashes( $menu ); //this operation is required as the json is send a post variable and not in the body
-				// save file and generate success  response
-
-				file_put_contents( self::getMenuPath( $menu_id ), $json );
-				$response = json_encode( array( 'success' => true, "url" => self::getMenuURL( $menu_id ) ) );
-			} else {
-				//insufficient params
-				header( 'HTTP/1.1 400 Bad Request', true, 400 );
-				$response = json_encode( array( 'error' => "params menu & menu_id required" ) );
+				}
 			}
+			utils::saveConfig($this->config);
+			$response = json_encode( array( 'status' => "success", "config" => $this->config ) );
 		} else {
 			header( 'HTTP/1.1 401 Unauthorized', true, 401 );
 			$response = json_encode( array( 'error' => "not allowed" ) );
@@ -127,8 +132,18 @@ class admin_panel {
 	}
 
 
+	/**
+	 * Updates the config file from the value in the post array
+	 */
+	static function updateConfigFromPOST(){
+
+	}
+
 	function render_admin_page() {
-		include_once __DIR__."/pages/main_page.php";
+		global $nonce_name, $themeURL;
+		$nonce_name = $this->nonce_name;
+		$themeURL = get_template_directory_uri();
+		include_once __DIR__ . "/pages/admin_page.php";
 	}
 
 
