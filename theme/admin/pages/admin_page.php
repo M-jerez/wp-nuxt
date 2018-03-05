@@ -41,7 +41,6 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         </td>
                         <td width="300px">
                             <input type="text" name="nuxt[node_path]" class="form-input" placeholder="/usr/local/bin/node" <?php echo utils::getConfigValueAttr($config["nuxt"]["node_path"]);?>>
-                            <br>
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +53,6 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         <td width="300px">
                             <input type="text" name="nuxt[nuxt_root_path]" class="form-input"
                                    placeholder="/var/www/vhosts/my_nuxt_site/" <?php echo utils::getConfigValueAttr($config["nuxt"]["nuxt_root_path"]);?>>
-                            <br>
                         </td>
                     </tr>
                     </tbody>

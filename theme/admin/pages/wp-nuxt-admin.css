@@ -33,6 +33,9 @@ body p{
 .postbox table tr td:last-child, .postbox table tr th:last-child{
     text-align: right;
 }
+.postbox table tr td{
+    vertical-align: top;
+}
 
 
 .postbox table tr:last-child td{
@@ -51,6 +54,11 @@ body #toast-container>div{
     opacity: 1;
 }
 
+
+.label.vld_message{
+    clear: both;
+    margin-top: 4px;
+}
 
 /*.wp-nuxt-wrap .postbox .inside{*/
     /*margin: 0;*/

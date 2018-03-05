@@ -176,7 +176,8 @@ class admin_panel {
 	 * Ajax function to test if the nuxt path is configured properly
 	 */
 	function  test_nuxt_path(){
-
+		//TODO, find nuxt_root_path + /node_modules/.bin/nuxt
+		//TODO, find nuxt_root_path + /nuxt.config.js
 	}
 
 	function render_admin_page() {
