@@ -110,10 +110,16 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                     </thead>
                     <tbody>
                     <tr>
-						<?php $url = get_rest_url() . WPN_REST_URL . "/menus/" ?>
+						<?php
+                        $url = get_rest_url() . WPN_REST_URL . "/menus/" ;
+						$url_id = get_rest_url() . WPN_REST_URL . "/menus/".htmlspecialchars('<id>');
+                        ?>
                         <td><strong><?php p( "Add Menus Endpoint") ?></strong><br>
                             <?php p("This options adds an endpoint to list all WordPress Menus.") ?></td>
-                        <td><a href="<?php echo $url ?>" target="_blank"><code><?php echo $url ?></code></a></td>
+                        <td>
+                            <a href="<?php echo $url ?>" target="_blank"><code><?php echo $url ?></code></a><br>
+                            <a href="<?php echo $url_id ?>" target="_blank"><code><?php echo $url_id ?></code></a>
+                        </td>
                         <td>
                             <label class="form-switch">
                                 <input type="checkbox" name="rest[menus]" <?php echo utils::getConfigCheckedAttr($config["rest"]["menus"]);?>>
@@ -150,10 +156,11 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         <td>
                             <strong><?php p( "Cache REST API" ) ?></strong><br>
 	                        <?php p( "When Enabled, all REST API endpoints will be cached, the cache is completely cleared after a post is modified." ); ?>
+                            <br><code>//TODO : this functionality is not yet implemented</code>
                         </td>
                         <td width="80px">
                             <label class="form-switch">
-                                <input type="checkbox" name="rest[cache]" <?php echo utils::getConfigCheckedAttr($config["rest"]["cache"]);?>>
+                                <input type="checkbox" name="rest[cache]" <?php echo utils::getConfigCheckedAttr($config["rest"]["cache"]);?> disabled>
                                 <i class="form-icon"></i>
                             </label>
                         </td>
@@ -182,7 +189,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                     <tbody>
                     <tr>
                         <td><strong><?php p("Hide Theme Settings") ?></strong>
-                            <br><?php p("As all the theme functionality is disabled, this option also hides the 'Theme Setting' tab fom the WordPress menu.") ?>
+                            <br><?php p("As all the theme functionality is disabled, this option also hides the 'Theme Settings' tab fom the WordPress menu.") ?>
                         </td>
                         <td>
                             <label class="form-switch">
@@ -208,7 +215,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
             </div>
             <div class="info">
                 <p>
-	                <?php p( "Refresh the page to see changes after save this settings." ) ?>
+	                <?php p( "Please refresh the page to see changes after save this settings." ) ?>
                 </p>
                 <span class="dashicons dashicons-info"></span>
             </div>

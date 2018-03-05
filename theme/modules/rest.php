@@ -7,8 +7,12 @@
  */
 
 namespace wpnuxt;
+
 use wpnuxt\utils as utils;
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Class rest
@@ -18,11 +22,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class rest {
 
 
-	private  $config;
-	function __construct(){
+	private $config;
+
+	function __construct() {
 		$this->config = utils::loadConfig();
-		if(!$this->config)
+		if ( ! $this->config ) {
 			return;
+		}
 		add_action( 'rest_endpoints', array( $this, 'remove_users_endpoint' ) );
 		add_action( 'rest_api_init', array( $this, 'add_menus_endpoint' ) );
 	}
@@ -36,11 +42,13 @@ class rest {
 	 * @return mixed
 	 */
 	function remove_users_endpoint( $endpoints ) {
-		if ( isset( $endpoints['/wp/v2/users'] ) ) {
-			unset( $endpoints['/wp/v2/users'] );
-		}
-		if ( isset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] ) ) {
-			unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+		if ( $this->config["rest"]["disable_users"] ) {
+			if ( isset( $endpoints['/wp/v2/users'] ) ) {
+				unset( $endpoints['/wp/v2/users'] );
+			}
+//			if ( isset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] ) ) {
+//				unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+//			}
 		}
 
 		return $endpoints;
@@ -51,21 +59,33 @@ class rest {
 	 * Adds the menus endpoints to the rest api
 	 */
 	function add_menus_endpoint() {
-		register_rest_route(
-			NUXT_PRESS_REST_NAME,
-			'/menus',
-			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'api_list_menus' )
-			) );
 
-		register_rest_route(
-			NUXT_PRESS_REST_NAME,
-			'/menus/(?P<id>[a-zA-Z(-]+)',
-			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'api_menu_by_id' )
-			) );
+		if ( $this->config["rest"]["menus"] ) {
+			register_rest_route(
+				WPN_REST_URL,
+				'/menus',
+				array(
+					'methods'  => 'GET',
+					'callback' => array( $this, 'api_list_menus' )
+				) );
+
+
+//			register_rest_route(
+//				WPN_REST_URL,
+//				'/menus/(?P<slug>[0-9a-zA-Z(-]+)',
+//				array(
+//					'methods'  => 'GET',
+//					'callback' => array( $this, 'api_menu_by_id_slug' )
+//				) );
+
+			register_rest_route(
+				WPN_REST_URL,
+				'/menus/(?P<id>\d+)',
+				array(
+					'methods'  => 'GET',
+					'callback' => array( $this, 'api_menu_by_id_slug' )
+				) );
+		}
 	}
 
 
@@ -74,12 +94,11 @@ class rest {
 	 * @return array
 	 */
 	function api_list_menus() {
-		$menus = [];
-		foreach ( get_registered_nav_menus() as $menu_id => $menu_desc ) {
-			$obj                 = new \stdClass;
-			$obj->slug           = $menu_id;
-			$obj->description    = $menu_desc;
-			$menus[ $obj->slug ] = $obj;
+		$menus = array();
+		foreach ( get_nav_menu_locations() as $menu_slug => $menu_id ) {
+
+			$menu = $menu_id?self::get_menu_object($menu_id):false;
+			$menus[ $menu_slug ] = $menu;
 		}
 
 		return $menus;
@@ -92,15 +111,67 @@ class rest {
 	 *
 	 * @return array|null|stdClass|WP_Error|WP_Term
 	 */
-	function api_menu_by_id( $data ) {
-		$menu        = new \stdClass;
-		$menu->items = [];
-		if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $data['id'] ] ) ) {
-			$menu        = get_term( $locations[ $data['id'] ] );
-			$menu->items = wp_get_nav_menu_items( $menu->term_id );
+	function api_menu_by_id_slug( $data ) {
+
+		$id =  $data['id']?intval($data['id']):$data['slug'];
+		$menu = self::get_menu_object($id);
+
+		if($menu){
+			return $menu;
+		}else{
+			return new \WP_Error( 'rest_menu_invalid_id', 'Invalid Menu ID or SLUG', array( 'status' => 404 ) );
+
 		}
 
-		return $menu;
 	}
+
+
+
+
+
+	static function get_menu_object( $id ) {
+		$menu        = new \stdClass;
+
+		$wp_menu = $id ? wp_get_nav_menu_object( $id ) : false;
+
+		if($wp_menu){
+			$menu->meta = $wp_menu;
+			$items = wp_get_nav_menu_items( $id );
+			$menu->items = $items?$items:array();
+			$menu->items_tree = $items ?self::buildTree( $items, 0 ):array();
+
+			return $menu;
+		}else{
+			return false;
+		}
+	}
+
+
+
+	/**
+	 * Modification of "Build a tree from a flat array in PHP"
+	 *
+	 * Authors: @DSkinner, @ImmortalFirefly and @SteveEdson
+	 *
+	 * @link https://stackoverflow.com/a/28429487/2078474
+	 */
+	static function buildTree( array &$elements, $parentId = 0 )
+	{
+		$branch = array();
+		foreach ( $elements as &$element )
+		{
+			if ( $element->menu_item_parent == $parentId )
+			{
+				$children = self::buildTree( $elements, $element->ID );
+				if ( $children )
+					$element->child_items = $children;
+
+				$branch[$element->ID] = $element;
+				unset( $element );
+			}
+		}
+		return $branch;
+	}
+
 
 }

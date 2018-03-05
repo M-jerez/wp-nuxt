@@ -28,19 +28,21 @@ define( "WPN_REST_URL",   'wpnuxt/v2' );
 if ( is_admin() ) {
 
 	// load the admin components
-	new \wpnuxt\node_nuxt();
-	new \wpnuxt\rest();
 	new \wpnuxt\admin_panel();
 
-	new \wpnuxt\theme_setup();
+	// configures wp interface
 	new \wpnuxt\wp_interface();
-
 	//new \wpnuxt\sitemap();
 }else{
 
+
+	new \wpnuxt\rest();
 }
 
+//node functionality
+new \wpnuxt\node_nuxt();
 
-
+//theme setup
+new \wpnuxt\theme_setup();
 
 
