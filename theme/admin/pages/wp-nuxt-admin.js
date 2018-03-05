@@ -23,6 +23,9 @@ jQuery(function($) {
     $("#wp-nuxt-save").click(function(){
         var button = $(this);
         var spinner = $(".save-action .spinner ");
+
+        //include disabled elemenets
+        var disabled = $(".wp-nuxt-config-params").find(':input:disabled').prop('disabled',false);
         var settings = $(".wp-nuxt-config-params").serializeArray();
 
 
@@ -32,7 +35,8 @@ jQuery(function($) {
             settings.push({name:el.attr("name"),value:"off"});
         });
 
-
+        //re-disable elements
+        disabled.prop('disabled',true);
 
         button.addClass("disabled");
         spinner.addClass("is-active");
@@ -52,6 +56,18 @@ jQuery(function($) {
 
         });
 
+    });
+
+
+    $("input[name='rest[menus]'] , input[name='wp_interface[disable_theme_settings]']").change(function(){
+        var hide_theme = $("input[name='wp_interface[disable_theme_settings]']").is(":checked");
+        var disable_users = $("input[name='rest[menus]'").is(":checked");
+
+        if(hide_theme && disable_users){
+            $("input[name='wp_interface[enable_menus]']").prop('checked', true);
+        }else{
+            $("input[name='wp_interface[enable_menus]']").prop('checked', false);
+        }
     });
 });
 

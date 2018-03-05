@@ -16,7 +16,7 @@ spl_autoload_register('autoloader::loader');
 i18nMessages::setLocale( get_locale() );
 
 
-define( "WPN_REST_URL", __NAMESPACE__ . '/v2' );
+define( "WPN_REST_URL",   'wpnuxt/v2' );
 
 // loads the config file
 

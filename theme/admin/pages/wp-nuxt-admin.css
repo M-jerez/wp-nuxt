@@ -29,3 +29,30 @@ body p{
 .save-action .spinner{
     float: none;
 }
+
+.postbox table tr td:last-child, .postbox table tr th:last-child{
+    text-align: right;
+}
+
+
+.postbox table tr:last-child td{
+    border-bottom: none;
+}
+
+.postbox table th{
+    background: #f8f8f8;
+    font-weight: lighter;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    line-height: 16px;
+}
+
+body #toast-container>div{
+    opacity: 1;
+}
+
+
+/*.wp-nuxt-wrap .postbox .inside{*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
