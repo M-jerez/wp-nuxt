@@ -78,6 +78,17 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                             </label>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <strong><?php p( "Run <code>nux generate</code> command" ) ?></strong><br>
+		                    <?php p( "Click on the button to run command and re-generate the static site" ) ?>
+                        </td>
+                        <td width="80px">
+                            <button type="button" class="btn btn-primary btn-sm" id="regenerate-site" >
+                                <i class="dashicons dashicons-image-rotate icon"></i>
+                                nuxt generate</button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -157,7 +168,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
 
         <form id="wp-interface-config" class="postbox wp-nuxt-config-params">
             <h2 class="hndle"><span class="label label-primary"><?php p( "WordPress Interface" ) ?></span>
-                <small><?php p( "Extra options to configure the WordPress interface" ) ?></small>
+                <small><?php p( "Extra options to configure the WordPress interface." ) ?></small>
             </h2>
             <div class="inside form-horizontal">
 
@@ -194,6 +205,12 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="info">
+                <p>
+	                <?php p( "Refresh the page to see changes after save this settings." ) ?>
+                </p>
+                <span class="dashicons dashicons-info"></span>
             </div>
         </form>
 

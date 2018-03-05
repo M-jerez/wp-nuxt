@@ -32,7 +32,15 @@ if ( is_admin() ) {
 	new \wpnuxt\rest();
 	new \wpnuxt\admin_panel();
 
+	new \wpnuxt\theme_setup();
+	new \wpnuxt\wp_interface();
+
 	//new \wpnuxt\sitemap();
 }else{
 
 }
+
+
+
+
+

@@ -67,10 +67,9 @@ class admin_panel {
 
 
 	/**
-	 * Removes The Appereance menu from the WP admin panel, this way most of the Theme functionality is removed
+	 * Add the wp nuxt admin page
 	 */
 	function admin_menu() {
-		remove_menu_page( 'themes.php' );
 		$this->admin_page = add_menu_page(
 			'Wp Nuxt Admin Page',
 			'WP Nuxt',
