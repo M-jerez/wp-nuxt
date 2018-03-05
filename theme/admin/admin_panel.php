@@ -30,6 +30,8 @@ class admin_panel {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ), 999 );
 		add_action('wp_ajax_save-' . $this->nonce_name, array($this, 'saveSettings'));
+		add_action('wp_ajax_test-node-path', array($this, 'test_node_path'));
+		add_action('wp_ajax_test-nuxt-path', array($this, 'test_nuxt_path'));
 	}
 
 
@@ -85,18 +87,8 @@ class admin_panel {
 	 * this must be an ajax call
 	 */
 	function saveSettings() {
-		$nonce = $_COOKIE[ $this->nonce_name ];
 
-
-		// check to see if the submitted nonce matches with the
-		// generated nonce we created earlier
-		if ( ! wp_verify_nonce( $nonce, $this->nonce_name ) ) {
-			die ( 'Insecure Query!' );
-		}
-
-		//sets json header
-		header( "Content-Type: application/json" );
-
+		self::ajax_call_init($this->nonce_name);
 		$response = '';
 
 		// ignore the request if the current user doesn't have
@@ -121,8 +113,7 @@ class admin_panel {
 		}
 
 
-		//set a new nonce so user can keep using ajax calls
-		setcookie( $this->nonce_name, wp_create_nonce( $this->nonce_name ), time() + 3600 );
+		self::ajax_call_finish($this->nonce_name);
 
 		// IMPORTANT: don't forget to "exit"
 		// response output
@@ -132,9 +123,59 @@ class admin_panel {
 
 
 	/**
-	 * Updates the config file from the value in the post array
+	 * Ajax function to test if the node path is configured properly
 	 */
-	static function updateConfigFromPOST(){
+	function  test_node_path(){
+		self::ajax_call_init($this->nonce_name);
+
+		if ( current_user_can( 'edit_posts' )) {
+			$node_cmd = $_POST["path"]?filter_var($_POST["path"], FILTER_SANITIZE_STRING):false;
+			if($node_cmd){
+				$version = self::node_path($node_cmd);
+				if($version){
+					$response = json_encode( array( 'status' => "success", "message" => "Node: ".$version[0] ) );
+				}else{
+					$response = json_encode( array( 'status' => "fail", "message" => "invalid node path" ) );
+				}
+			}else{
+				$response = json_encode( array( 'status' => "fail", "message" => "node path not configured" ) );
+			}
+		} else {
+			header( 'HTTP/1.1 401 Unauthorized', true, 401 );
+			$response = json_encode( array( 'error' => "not allowed" ) );
+		}
+
+		self::ajax_call_finish($this->nonce_name);
+
+		// IMPORTANT: don't forget to "exit"
+		// response output
+		echo $response;
+		exit;
+	}
+
+
+	/**
+	 * Test node path
+	 * @param $path
+	 *
+	 * @return array|bool
+	 */
+	static function node_path($path){
+		$output=array();
+		$exit_code = 0;
+		exec("$path -v",$output,$exit_code);
+
+		if($exit_code === 0){
+			return $output;
+		}else{
+			return false;
+		}
+	}
+
+	/**
+	 * Ajax function to test if the nuxt path is configured properly
+	 */
+	function  test_nuxt_path(){
 
 	}
 
@@ -143,6 +184,27 @@ class admin_panel {
 		$nonce_name = $this->nonce_name;
 		$themeURL = get_template_directory_uri();
 		include_once __DIR__ . "/pages/admin_page.php";
+	}
+
+
+	static function ajax_call_init($nonce_name){
+		$nonce = $_COOKIE[ $nonce_name ];
+
+
+		// check to see if the submitted nonce matches with the
+		// generated nonce we created earlier
+		if ( ! wp_verify_nonce( $nonce, $nonce_name ) ) {
+			die ( 'Insecure Query!' );
+		}
+
+		//sets json header
+		header( "Content-Type: application/json" );
+	}
+
+
+	static function ajax_call_finish($nonce_name){
+		//set a new nonce so user can keep using ajax calls
+		setcookie( $nonce_name, wp_create_nonce( $nonce_name ), time() + 3600 );
 	}
 
 

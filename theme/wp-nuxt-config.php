@@ -12,7 +12,7 @@ return array(
 	),
 	"nuxt"    => array(
 		"automatic_generation" => true,
-		"node_path"            => "/usr/local/lib/node",
+		"node_path"            => "/usr/local/bin/node",
 		"nuxt_root_path"       => ""
 	),
 	"wp_interface" => array(

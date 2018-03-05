@@ -40,7 +40,8 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                             <?php p( "The path in the system to the node.js binary o executable file." ); ?>
                         </td>
                         <td width="300px">
-                            <input type="text" name="nuxt[node_path]" class="form-input" placeholder="/usr/local/lib/node" <?php echo utils::getConfigValueAttr($config["nuxt"]["node_path"]);?>>
+                            <input type="text" name="nuxt[node_path]" class="form-input" placeholder="/usr/local/bin/node" <?php echo utils::getConfigValueAttr($config["nuxt"]["node_path"]);?>>
+                            <br>
                         </td>
                     </tr>
                     <tr>
@@ -53,12 +54,13 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         <td width="300px">
                             <input type="text" name="nuxt[nuxt_root_path]" class="form-input"
                                    placeholder="/var/www/vhosts/my_nuxt_site/" <?php echo utils::getConfigValueAttr($config["nuxt"]["nuxt_root_path"]);?>>
+                            <br>
                         </td>
                     </tr>
                     </tbody>
                 </table>
                 <br>&nbsp;<br>
-                <table class="table  ">
+                <table class="table" id="nuxt-actions">
                     <thead>
                     <tr>
                         <th>Option</th>
@@ -73,7 +75,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         </td>
                         <td width="80px">
                             <label class="form-switch">
-                                <input type="checkbox" name="nuxt[automatic_generation]" <?php echo utils::getConfigCheckedAttr($config["nuxt"]["automatic_generation"]);?>>
+                                <input type="checkbox" name="nuxt[automatic_generation]" <?php echo utils::getConfigCheckedAttr($config["nuxt"]["automatic_generation"]);?> disabled>
                                 <i class="form-icon"></i>
                             </label>
                         </td>
@@ -84,7 +86,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
 		                    <?php p( "Click on the button to run command and re-generate the static site" ) ?>
                         </td>
                         <td width="80px">
-                            <button type="button" class="btn btn-primary btn-sm" id="regenerate-site" >
+                            <button type="button" class="btn btn-primary btn-sm" id="regenerate-site" disabled >
                                 <i class="dashicons dashicons-image-rotate icon"></i>
                                 nuxt generate</button>
                         </td>
@@ -233,5 +235,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
     var API_URL = "<?= home_url() ?>/wp-json/wp/v2/";
     var AJAX_URL = "<?= admin_url('admin-ajax.php'); ?>";
     var AJAX_SAVE_ACTION = "save-<?= $nonce_name ?>";
+    var AJAX_NODE_PATH_ACTION = "test-node-path";
+    var AJAX_NUXT_PATH_ACTION = "test-nuxt-path";
     var ADMIN_URL = "<?= site_url() ?>/wp-admin/";
 </script>

@@ -40,6 +40,8 @@ jQuery(function($) {
 
         button.addClass("disabled");
         spinner.addClass("is-active");
+
+        //save setting ajax call
         $.ajax({
             type: 'POST',
             cache: false,
@@ -53,10 +55,125 @@ jQuery(function($) {
         }).always(function(){
             spinner.removeClass("is-active");
             button.removeClass("disabled");
-
         });
 
+
+
     });
+
+
+
+    var node_path = "";
+    var nuxt_path = "";
+    var node_path_valid = false;
+    var nuxt_path_valid = false;
+
+    testNodePath();
+    testNuxtPath();
+
+
+    $("input[name='nuxt[node_path]']").blur(function(){
+        testNodePath();
+    });
+    $("input[name='nuxt[nuxt_root_path]']").blur(function(){
+        testNuxtPath();
+    });
+
+    function testNodePath(){
+        var el = $("input[name='nuxt[node_path]']");
+        var container = el.parent();
+        var val = el.val();
+        if(!val){
+            node_path_valid = false;
+            pathFeedBack(container,false,"Empty Value");
+            return;
+        }
+
+
+        if(node_path !== val){
+            node_path = val;
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: AJAX_URL+"?action="+AJAX_NODE_PATH_ACTION,
+                data: {path:node_path}
+            }).done(function(data){
+                var success = (data.status === "success");
+                node_path_valid = success;
+                pathFeedBack(container,success,data.message);
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                node_path_valid = false;
+                toastr.error('Problem testing Node Path, please contact your admin!<br><code>'+errorThrown+'</code>');
+                beep();
+            }).always(function(){
+
+            });
+        }
+    }
+
+    function testNuxtPath(){
+        var el = $("input[name='nuxt[nuxt_root_path]']");
+        var container = el.parent();
+        var val = el.val();
+        if(!val){
+            nuxt_path_valid = false;
+            pathFeedBack(container,false,"Empty Value");
+            return;
+        }
+
+
+        if(nuxt_path !== val){
+            nuxt_path = val;
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: AJAX_URL+"?action="+AJAX_NUXT_PATH_ACTION,
+                data: {path:nuxt_path}
+            }).done(function(data){
+                var success = (data.status === "success");
+                nuxt_path_valid = success;
+                pathFeedBack(container,success,data.message);
+
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                nuxt_path_valid = false;
+                toastr.error('Problem testing nuxt Path, please contact your admin!<br><code>'+errorThrown+'</code>');
+                beep();
+            }).always(function(){
+
+            });
+        }
+    }
+
+
+    function pathFeedBack(container,success,message){
+        container.find(".vld_message").remove();
+        if(success){
+            container.append("<span class='label label-success vld_message'>"+message+"</span>");
+        }else{
+            container.append("<span class='label label-error vld_message'>"+message+"</span>");
+        }
+
+        enableNuxtActions();
+    }
+
+    function enableNuxtActions(){
+        if(node_path_valid && nuxt_path_valid){
+            $("input[name='nuxt[automatic_generation]']").prop("disabled",false);
+            $("#regenerate-site").prop("disabled",false);
+            $("#nuxt-actions").css("opacity","1");
+        }else{
+            $("input[name='nuxt[automatic_generation]']").prop("disabled",true);
+            $("#regenerate-site").prop("disabled",true);
+            $("#nuxt-actions").css("opacity","0.4");
+        }
+    }
+
+
+
+
+
+
+
 
 
     $("input[name='rest[menus]'] , input[name='wp_interface[disable_theme_settings]']").change(function(){
