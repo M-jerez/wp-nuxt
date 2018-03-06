@@ -139,6 +139,7 @@ class utils {
 	 * @return array|bool  the nodejs version or false
 	 */
 	static function test_node_path($path){
+	    $path = realpath($path);
 		$output=array();
 		$exit_code = 0;
 		$is_file = file_exists($path);
@@ -162,6 +163,7 @@ class utils {
 	 * @return bool
 	 */
 	static function test_nuxt_path($nuxt_root){
+		$nuxt_root = realpath($nuxt_root);
 		$exec_file = "/node_modules/.bin/nuxt";
 		$conf_file = "/nuxt.config.js";
 		$nuxt_exec_path =  $nuxt_root.$exec_file;
@@ -175,6 +177,82 @@ class utils {
 			return false;
 		}else{
 			return true;
+		}
+	}
+
+
+	/**
+     * gets an absolute or path relative to the constant ABSPATH, andretruns its real path
+	 * @param $path
+	 */
+	static function resolve_ABSPATH_path($path){
+
+	    $rel_str = ABSPATH.$path;
+	    $abs = $path;
+
+        if(file_exists($rel_str)){
+            return realpath($rel_str);
+        }
+
+        if(file_exists($abs)){
+	        return realpath($abs);
+        }
+
+        return $path;
+    }
+
+
+	/**
+     * function to be called at the beguining of every ajax call.
+     * verifies nonce and set json content type
+	 * @param $nonce_name
+	 */
+	static function ajax_call_init($nonce_name){
+
+		//check admin and user capability
+		$nonce = $_COOKIE[ $nonce_name ];
+
+
+		// check to see if the submitted nonce matches with the
+		// generated nonce we created earlier
+		if ( ! wp_verify_nonce( $nonce, $nonce_name ) ) {
+			die ( 'Insecure Query!' );
+		}
+
+		//sets json header
+		header( "Content-Type: application/json" );
+	}
+
+
+	/** Funciton to be used to end and ajax call
+     * Sets next nonce and returns response
+	 * @param $nonce_name
+	 * @param $response
+	 */
+	static function ajax_call_finish($nonce_name , $response){
+		//set a new nonce so user can keep using ajax calls
+		setcookie($nonce_name, wp_create_nonce( $nonce_name ), time() + 3600 );
+
+		// IMPORTANT: don't forget to "exit"
+		// response output
+		echo $response;
+		exit;
+	}
+
+
+
+
+	/**
+     * Creates a wordpress nonce
+	 * @param $action
+	 */
+	static function setNonce($nonce_name) {
+		//check admin and user capability
+		if ( is_admin() && current_user_can( 'edit_posts' ) ) {
+			//check is not ajax call
+			if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+				setcookie($nonce_name, wp_create_nonce( $nonce_name ), time() + 3600 );
+			}
 		}
 	}
 

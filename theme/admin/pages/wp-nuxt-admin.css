@@ -60,6 +60,13 @@ body #toast-container>div{
     margin-top: 4px;
 }
 
+.label.vld_message code{
+    white-space: nowrap;
+    //background-color: rgba(251,237,237,0.6);
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
 /*.wp-nuxt-wrap .postbox .inside{*/
     /*margin: 0;*/
     /*padding: 0;*/

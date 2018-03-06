@@ -38,6 +38,8 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                         <td>
                             <strong><label for="nuxt[node_path]"><?php p( "Node.js Path" ) ?></label></strong><br>
                             <?php p( "The path in the system to the node.js binary o executable file." ); ?>
+                            <br>
+	                        <?php p( "The value must be and <strong>absolute path</strong>" ) ?>
                         </td>
                         <td width="300px">
                             <input type="text" name="nuxt[node_path]" class="form-input" placeholder="/usr/local/bin/node" <?php echo utils::getConfigValueAttr($config["nuxt"]["node_path"]);?>>
@@ -48,7 +50,9 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
                             <strong><label for="nuxt[nuxt_root_path]"><?php p( "Nuxt Path" ) ?>: </label></strong><br>
 	                        <?php p( "The root directory of the Nuxt project, <code>nuxt generate</code> command will be executed from this directory." ) ?>
                             <br>
-	                        <?php p( "This directory also contains the file <code>nuxt.config.js</code>" ) ?>
+	                        <?php p( "This directory contains the files <code>./nuxt.config.js</code> and <code>./node_modules/.bin/nuxt</code>" ) ?>
+                            <br>
+	                        <?php p( "The value must be and <strong>absolute path</strong> or <strong>relative to the WP <code>ABSPATH</code></strong> constant (Absolute path to the WordPress directory)." ) ?>
                         </td>
                         <td width="300px">
                             <input type="text" name="nuxt[nuxt_root_path]" class="form-input"
@@ -227,12 +231,12 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
         </div>
     </div>
 </div>
-<?php global $nonce_name, $themeURL; ?>
+<?php global $themeURL; ?>
 <script>
     var THEME_URL = "<?= $themeURL ?>";
     var API_URL = "<?= home_url() ?>/wp-json/wp/v2/";
     var AJAX_URL = "<?= admin_url('admin-ajax.php'); ?>";
-    var AJAX_SAVE_ACTION = "save-<?= $nonce_name ?>";
+    var AJAX_SAVE_ACTION = "save-nuxt-settings";
     var AJAX_NODE_PATH_ACTION = "test-node-path";
     var AJAX_NUXT_PATH_ACTION = "test-nuxt-path";
     var ADMIN_URL = "<?= site_url() ?>/wp-admin/";
