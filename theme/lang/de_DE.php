@@ -21,94 +21,149 @@ return array(
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 28 */
-"Node.js path"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 25 */
+"Configures Nuxt.js Static Site Generator. <a href='https://nuxtjs.org/' target='_blank'>Nuxt.js documentation</a>"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 32 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 39 */
+"Node.js Path"
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 40 */
 "The path in the system to the node.js binary o executable file."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 37 */
-"Nuxt root path"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 48 */
+"Nuxt Path"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 43 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 49 */
 "The root directory of the Nuxt project, <code>nuxt generate</code> command will be executed from this directory."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 44 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 51 */
 "This directory also contains the file <code>nuxt.config.js</code>"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 53 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 71 */
 "Automatic Static Site Generation"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 56 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 72 */
 "When Enabled, the <code>nuxt generate</code> command will be executed after a post is created, updated or deleted."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 64 */
-"Configures Nuxt.js Static Site Generator: for more info about Nuxt.js please visit their <a href='https://nuxtjs.org/' target='_blank'>documentation.</a>"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 83 */
+"Run <code>nux generate</code> command"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 72 */
-"Rest"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 84 */
+"Click on the button to run command and re-generate the static site"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 87 */
-"List All WP Menus on the Rest API"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 99 */
+"REST API"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 87 */
-"This Options Also Enables the WP Menus page on the Admin panel."
-=>
-""
-,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 98 */
-"Disable the endpoint to List all WP users"
-=>
-""
-,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 98 */
-"(better security)"
-=>
-""
-,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 114 */
-"Cache REST API Endpoints"
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 100 */
+"Adds some extra functionality to the Wordpress REST API"
 =>
 ""
 ,
 /* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 117 */
-"When Enabled, all REST API endpoints will be cached, the cache is completely cleared after a post is modified"
+"Add Menus Endpoint"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 125 */
-"Adds some extra functionality to the Wordpress REST API, like new endpoints and caching."
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 118 */
+"This options adds an endpoint to list all WordPress Menus."
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 126 */
-"Also disables the existing User Endpoint as a security measure."
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 132 */
+"Disable Users Endpoint"
 =>
 ""
 ,
-/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 127 */
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 133 */
 "By default, WordPress allows to list all user accounts, which might be a security risk."
 =>
 ""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 134 */
+"This option disables the endpoint to list all user as this might be a security risk."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 157 */
+"Cache REST API"
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 158 */
+"When Enabled, all REST API endpoints will be cached, the cache is completely cleared after a post is modified."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 177 */
+"WordPress Interface"
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 178 */
+"Extra options to configure the WordPress interface."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 191 */
+"Hide Theme Settings"
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 192 */
+"As all the theme functionality is disabled, this option also hides the 'Theme Settings' tab fom the WordPress menu."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 202 */
+"Show WP Menus Tab"
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 203 */
+"This option is automatically enabled when <code>Hide Theme Settings</code> and the <code>Add Menus Endpoint</code> options are selected."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/admin/pages/admin_page.php : line 218 */
+"Please refresh the page to see changes after save this settings."
+=>
+""
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/modules/theme_setup.php : line 29 */
+'Primary Menu'
+=>
+''
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/modules/theme_setup.php : line 30 */
+'Sidebar Menu'
+=>
+''
+,
+/* /Applications/AMPPS/www/mjerez/wp-nuxt/theme/modules/theme_setup.php : line 31 */
+'Footer Menu'
+=>
+''
 ,
 );

@@ -236,4 +236,5 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
     var AJAX_NODE_PATH_ACTION = "test-node-path";
     var AJAX_NUXT_PATH_ACTION = "test-nuxt-path";
     var ADMIN_URL = "<?= site_url() ?>/wp-admin/";
+    var IS_WPNUXT_ADMIN_PAGE = true;
 </script>

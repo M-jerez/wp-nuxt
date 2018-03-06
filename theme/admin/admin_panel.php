@@ -113,12 +113,7 @@ class admin_panel {
 		}
 
 
-		self::ajax_call_finish($this->nonce_name);
-
-		// IMPORTANT: don't forget to "exit"
-		// response output
-		echo $response;
-		exit;
+		self::ajax_call_finish($this->nonce_name, $response);
 	}
 
 
@@ -129,9 +124,9 @@ class admin_panel {
 		self::ajax_call_init($this->nonce_name);
 
 		if ( current_user_can( 'edit_posts' )) {
-			$node_cmd = $_POST["path"]?filter_var($_POST["path"], FILTER_SANITIZE_STRING):false;
+			$node_cmd = $_POST["path"]?filter_var($_POST["path"], FILTER_SANITIZE_URL):false;
 			if($node_cmd){
-				$version = self::node_path($node_cmd);
+				$version = utils::test_node_path($node_cmd);
 				if($version){
 					$response = json_encode( array( 'status' => "success", "message" => "Node: ".$version[0] ) );
 				}else{
@@ -145,39 +140,38 @@ class admin_panel {
 			$response = json_encode( array( 'error' => "not allowed" ) );
 		}
 
-		self::ajax_call_finish($this->nonce_name);
-
-		// IMPORTANT: don't forget to "exit"
-		// response output
-		echo $response;
-		exit;
+		self::ajax_call_finish($this->nonce_name, $response);
 	}
 
 
-	/**
-	 * Test node path
-	 * @param $path
-	 *
-	 * @return array|bool
-	 */
-	static function node_path($path){
-		$output=array();
-		$exit_code = 0;
-		exec("$path -v",$output,$exit_code);
-
-		if($exit_code === 0){
-			return $output;
-		}else{
-			return false;
-		}
-	}
 
 	/**
 	 * Ajax function to test if the nuxt path is configured properly
 	 */
 	function  test_nuxt_path(){
-		//TODO, find nuxt_root_path + /node_modules/.bin/nuxt
-		//TODO, find nuxt_root_path + /nuxt.config.js
+
+		self::ajax_call_init($this->nonce_name);
+
+		if ( current_user_can( 'edit_posts' )) {
+			$nuxt_root = $_POST["path"]?filter_var($_POST["path"], FILTER_SANITIZE_URL):false;
+			$ok = utils::test_nuxt_path($nuxt_root);
+
+			if(!is_dir($nuxt_root)){
+				$response = json_encode( array( 'status' => "fail", "message" => "Directory does not exist." ) );
+			}else if(!$ok){
+				$response = json_encode( array( 'status' => "fail", "message" => "nuxt.config.js or /node_modules/.bin/nuxt <br>Not found in this directory." ) );
+			}else{
+				$response = json_encode( array( 'status' => "success", "message" => "nuxt.config.js and .bin/nuxt found." ) );
+			}
+
+		} else {
+			header( 'HTTP/1.1 401 Unauthorized', true, 401 );
+			$response = json_encode( array( 'error' => "not allowed" ) );
+		}
+
+		self::ajax_call_finish($this->nonce_name, $response);
+
+
 	}
 
 	function render_admin_page() {
@@ -203,9 +197,14 @@ class admin_panel {
 	}
 
 
-	static function ajax_call_finish($nonce_name){
+	static function ajax_call_finish($nonce_name , $response){
 		//set a new nonce so user can keep using ajax calls
 		setcookie( $nonce_name, wp_create_nonce( $nonce_name ), time() + 3600 );
+
+		// IMPORTANT: don't forget to "exit"
+		// response output
+		echo $response;
+		exit;
 	}
 
 

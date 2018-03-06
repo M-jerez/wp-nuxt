@@ -128,4 +128,54 @@ class utils {
 
 		return self::$wpn_config;
 	}
+
+
+
+
+	/**
+	 * Test node path, check the path is an existing file and if so executes the command to get the node version -v
+	 * @param $path
+	 *
+	 * @return array|bool  the nodejs version or false
+	 */
+	static function test_node_path($path){
+		$output=array();
+		$exit_code = 0;
+		$is_file = file_exists($path);
+		if(!$is_file)
+			return false;
+		exec("$path -v",$output,$exit_code);
+
+		if($exit_code === 0){
+			return $output;
+		}else{
+			return false;
+		}
+	}
+
+
+
+	/**
+	 * Test nuxt path, checks "/node_modules/.bin/nuxt" and "/nuxt.config.js" exist
+	 * @param $path
+	 *
+	 * @return bool
+	 */
+	static function test_nuxt_path($nuxt_root){
+		$exec_file = "/node_modules/.bin/nuxt";
+		$conf_file = "/nuxt.config.js";
+		$nuxt_exec_path =  $nuxt_root.$exec_file;
+		$nuxt_conig_path =  $nuxt_root.$conf_file;
+		$nexp = file_exists($nuxt_exec_path);
+		$nconfp = file_exists($nuxt_conig_path);
+
+		if(!is_dir($nuxt_root)){
+			return false;
+		}else if(!($nexp && $nconfp)){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 }

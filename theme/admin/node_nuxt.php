@@ -17,6 +17,14 @@ class node_nuxt {
 		$this->config = utils::loadConfig();
 		if(!$this->config)
 			return;
+		add_action('wp_ajax_run-nuxt-generate', array($this, 'nuxt_generate'));
+	}
+
+
+
+
+	function nuxt_generate(){
+		ini_set('max_execution_time', 600);
 
 	}
 }
