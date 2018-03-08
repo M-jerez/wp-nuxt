@@ -20,7 +20,6 @@ jQuery(function($) {
     if(typeof IS_WPNUXT_ADMIN_PAGE !== 'undefined' && IS_WPNUXT_ADMIN_PAGE === true ){
         WPNUXT_ADMIN_PAGE($);
     }
-
 });
 
 

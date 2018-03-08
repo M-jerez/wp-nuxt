@@ -256,4 +256,21 @@ class utils {
 		}
 	}
 
+
+	/**
+     * return a json response
+	 * @param $staus
+	 * @param $message
+	 * @param bool | array $data
+	 */
+	static function json_response( $staus, $message ,$data = false) {
+		header( 'Content-Type: application/json' );
+		echo json_encode( array(
+			"status"  => $staus,
+			"message" => $message,
+            "data" => $data
+		) );
+	}
+
+
 }
