@@ -18,6 +18,17 @@ class cmd_runner {
 
 	static $first_output = "\e[42m\e[30m RUNNING NUXT GENERATE \e[39m\e[49m\n";
 
+	static $exit_codes = array(
+		0 => "command successful",
+		1 => "General Error",
+		2 => "Misuse of shell builtins",
+		126 => "Command invoked cannot execute",
+		127 => "command not found",
+		128 => "Invalid argument to exit",
+		137 => "Fatal error signal \"n\"",
+		130 => "Script terminated by Control-C"
+	);
+
 
 	function __construct( $shmid, $CMD, $CWD ) {
 		if(sMem::isOpenMem($shmid)){
@@ -29,7 +40,18 @@ class cmd_runner {
 
 		set_time_limit( 0 );
 		$data = $this->runCommand( $shmid, $CMD, $CWD );
-		utils::json_response("success","command running",$data);
+		$this->exit($data);
+
+	}
+
+	function exit($data){
+		$c = $data["exit_code"];
+		$exit_message = (self::$exit_codes[$c])?self::$exit_codes[$c]:"Unknown Error";
+		if($data["exit_code"] != 0){
+			utils::json_response("fail", $exit_message, $data);
+		}else{
+			utils::json_response("success","command running",$data);
+		}
 	}
 
 
@@ -67,7 +89,7 @@ class cmd_runner {
 		fclose( $pipes[2] );
 
 		$data["output"] = $output;
-		$data["exit_status"] = proc_close( $process );
+		$data["exit_code"] = proc_close( $process );
 
 		return $data;
 	}

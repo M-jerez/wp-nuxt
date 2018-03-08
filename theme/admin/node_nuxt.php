@@ -26,13 +26,12 @@ class node_nuxt {
 		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ), 999 );
 		add_action( 'wp_ajax_wpnuxt-cmd-generate', array( $this, 'nuxt_generate' ) );
 		add_action( 'wp_ajax_wpnuxt-cmd-read', array( $this, 'nuxt_read' ) );
-		add_action('admin_footer', array( $this, 'render_xterm_area' ));
+		add_action( 'admin_footer', array( $this, 'render_xterm_area' ) );
 	}
 
 
-
 	function setNonce() {
-		utils::setNonce($this->nonce_name);
+		utils::setNonce( $this->nonce_name );
 	}
 
 	function scripts() {
@@ -41,48 +40,19 @@ class node_nuxt {
 		wp_enqueue_script( 'jquery' );
 
 		wp_enqueue_script( 'termjs', "https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/xterm.min.js", array( "jquery" ) );
-		wp_enqueue_script( 'wp-nuxt-term', get_template_directory_uri(). '/admin/pages/wp-nuxt-xterm.js', array( "jquery" ) );
-
+		wp_enqueue_script( 'termjs-fit', "https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/addons/fit/fit.min.js", array( "jquery" ) );
+		wp_enqueue_script( 'wp-nuxt-term', get_template_directory_uri() . '/admin/pages/wp-nuxt-xterm.js', array( "jquery" ) );
 
 
 		wp_enqueue_style( "termcss", "https://cdnjs.cloudflare.com/ajax/libs/xterm/2.9.2/xterm.min.css" );
 		wp_enqueue_style( 'wp-nuxt-term', get_template_directory_uri() . '/admin/pages/wp-nuxt-xterm.css' );
 	}
 
+
 	/**
 	 * Run the NUxt Generate Command
 	 */
 	function nuxt_generate() {
-		utils::ajax_call_init( $this->nonce_name );
-
-		if ( current_user_can( 'edit_posts' ) ) {
-
-			$node_path      = filter_var( $this->config["nuxt"]["node_path"], FILTER_SANITIZE_URL );
-			$nuxt_root_path = filter_var( $this->config["nuxt"]["nuxt_root_path"], FILTER_SANITIZE_URL );
-
-			if ( utils::test_nuxt_path( $nuxt_root_path ) && utils::test_node_path( $node_path ) ) {
-
-				//TODO:
-
-			} else {
-				$response = json_encode( array( 'status'  => "fail",
-				                                "message" => "incorrect values node_path or nuxt_root_path in the wp-nuxt-config.php file"
-				) );
-			}
-
-		} else {
-			header( 'HTTP/1.1 401 Unauthorized', true, 401 );
-			$response = json_encode( array( 'error' => "not allowed" ) );
-		}
-
-		utils::ajax_call_finish( $this->nonce_name, $response );
-	}
-
-
-	/**
-	 * Run the NUxt Generate Command
-	 */
-	function nuxt_read() {
 		utils::ajax_call_init( $this->nonce_name );
 
 		if ( current_user_can( 'edit_posts' ) ) {
@@ -100,20 +70,23 @@ class node_nuxt {
 				$CMD = "$nuxt_root_path/node_modules/.bin/nuxt  generate";
 
 
-				if ( $_GET["mode"] == "runner") {
+				if ( $_GET["mode"] == "runner" ) {
 					// success: mode runner and not execurting
 					new \wpnuxt\cmd_runner( $shmid, $CMD, $CWD );
-				} else if ( $_GET["mode"] === "reader") {
+				} else if ( $_GET["mode"] === "reader" ) {
 					// success: mode reader and all parameters ok
-					new \wpnuxt\cmd_reader($shmid);
+					new \wpnuxt\cmd_reader( $shmid );
 				} else {
 					// fail: no missing parameter
 					utils::jsonresponse( "fail", "missing parameters." );
 				}
 
 			} else {
-				$response = json_encode( array( 'status'  => "fail",
-				                                "message" => "incorrect values node_path or nuxt_root_path in the wp-nuxt-config.php file"
+				$response = json_encode( array(
+					'status'  => "fail",
+					"message" => "incorrect values node_path or nuxt_root_path in the wp-nuxt-config.php file. \n"
+					             . "node path: $node_path \n"
+					             . "node root: $nuxt_root_path "
 				) );
 			}
 
@@ -126,13 +99,11 @@ class node_nuxt {
 	}
 
 
-
 	function render_xterm_area() {
 		global $themeURL;
 		$themeURL = get_template_directory_uri();
 		include_once __DIR__ . "/pages/xterm_page.php";
 	}
-
 
 
 }

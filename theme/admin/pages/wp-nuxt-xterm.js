@@ -23,27 +23,100 @@ function WPNUXT_TERM_PAGE($){
      });
 
     var term = new Terminal({
-        cursorBlink:true,
+        cursorBlink:false,
         cols: 2000,
         tabStopWidth:1
     });
     term.open(document.getElementById('x_terminal'));
+    term.fit();
 
-    var finished = false;
-    $.getJSON( "nuxt-generate.php?mode=runner", function( data ) {
-        console.log(data);
+
+
+
+    $(".wp-nuxt-generate-site").click(function(){
+
+
+
+        //save setting ajax call
+
+        generateCMD();
+
     });
 
-//    var running = setTimeout(function(){
-//        if(!finished){
-//            $.get( "nuxt-generate-progress.php", function( data ) {
-//                var cols = maxColumns(data);
-//
-//
-//                term.write(fixnewline(data));
-//            });
-//        }
-//    },200);
+
+
+    function generateCMD(){
+        $xterm_wrapper.addClass("active");
+        term.clear();
+        animateRunning();
+        $.ajax({
+            type: 'GET',
+            cache: false,
+            url: AJAX_URL+"?action="+AJAX_CMD_GENERATE+"&mode=runner"
+        }).done(function(data){
+            //TODO: finsih
+            console.log(data);
+            var success = (data.status === "success");
+            if(success){
+
+            }else{
+                xtermError(data.message);
+                if(typeof data.data.output[0] !== 'undefined'){
+                    xtermError(data.data.output[0].content);
+                }
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            //TODO
+        }).always(function(){
+            //TODO
+            stopAnimateRunning();
+        });
+    }
+
+
+    var readCMDFailed = false;
+
+    function readCMD(){
+        if(readCMDFailed)
+            return;
+        setTimeout(function(){
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: AJAX_URL+"?action="+AJAX_CMD_GENERATE+"&mode=reader"
+            }).done(function(data){
+                //TODO: finsih
+
+                if(!finished){
+                    readCMD()
+                }else{
+
+                }
+                console.log(data);
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                //TODO
+                readCMDFailed = true;
+            }).always(function(){
+                //TODO
+            });
+        },400);
+    }
+
+
+    function animateRunning(){
+        $(".xterm-running-icon > .dashicons-image-rotate").addClass("rotate_anim");
+    }
+
+    function stopAnimateRunning(){
+        $(".xterm-running-icon > .dashicons-image-rotate").removeClass("rotate_anim");
+    }
+
+
+
+    function xtermError($message){
+        term.write("\u001b[41m\u001b[39m ERROR: "+fixnewline($message)+" \u001b[39m\u001b[49m\r\n");
+    }
+
 
 
     function fixnewline(text){

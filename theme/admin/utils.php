@@ -163,7 +163,7 @@ class utils {
 	 * @return bool
 	 */
 	static function test_nuxt_path($nuxt_root){
-		$nuxt_root = realpath($nuxt_root);
+		$nuxt_root = self::resolve_ABSPATH_path($nuxt_root);
 		$exec_file = "/node_modules/.bin/nuxt";
 		$conf_file = "/nuxt.config.js";
 		$nuxt_exec_path =  $nuxt_root.$exec_file;

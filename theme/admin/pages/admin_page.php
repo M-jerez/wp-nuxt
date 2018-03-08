@@ -88,7 +88,7 @@ $config = include(get_template_directory() ."/wp-nuxt-config.php");
 		                    <?php p( "Click on the button to run command and re-generate the static site" ) ?>
                         </td>
                         <td width="80px">
-                            <button type="button" class="btn btn-primary btn-sm" id="regenerate-site" disabled >
+                            <button type="button" class="btn btn-primary btn-sm wp-nuxt-generate-site" id="regenerate-site" disabled >
                                 <i class="dashicons dashicons-image-rotate icon"></i>
                                 nuxt generate</button>
                         </td>
