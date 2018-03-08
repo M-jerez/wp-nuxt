@@ -54,6 +54,9 @@ body p{
     font-family: Consolas,monospace;
     font-weight: lighter;
     font-size: 0.8rem;
+    line-height: 1.2;
+    margin-bottom: .5em;
+    margin-top: 0;
 }
 
 #xterm_page_wrapper .xterm_page_header .open-close{
@@ -65,6 +68,8 @@ body p{
     border: 1px solid #555;
     color: #fff;
     box-shadow: none;
+    width: 1.4rem;
+    border-radius: 50%;
 }
 
 #xterm_page_wrapper.active .xterm_page_header .open-close{
@@ -165,4 +170,44 @@ body p{
         -o-transform: rotate(-360deg);
         transform: rotate(-360deg);
     }
+}
+
+
+/**
+    global generate site button
+ */
+#regenerate-site-top-bar{
+    display:none;
+    background: #5755d9;
+    border-color: #4b48d6;
+    color: #fff;
+    font-size: .7rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    padding: .15rem .3rem;
+    -webkit-appearance: button;
+    border: .05rem solid #5755d9;
+    border-radius: .1rem;
+    cursor: pointer;
+    opacity: 1;
+    position: relative;
+    top:-0.1rem;
+}
+#regenerate-site-top-bar > .dashicons{
+    font-family: "dashicons";
+    font-size: 1rem;
+    position: relative;
+    top:-0.3rem;
+}
+#regenerate-site-top-bar:hover{
+    background: #4240d4;
+    border-color: #3634d2;
+    color: #fff;
+}
+#wpadminbar #regenerate-site-top-bar{
+    display: inline-block;
+}
+#wpadminbar ul li.wpnux-top-bar-li{
+    padding: 0 5px;
+    cursor: pointer;
 }

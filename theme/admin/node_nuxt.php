@@ -105,5 +105,4 @@ class node_nuxt {
 		include_once __DIR__ . "/pages/xterm_page.php";
 	}
 
-
 }
