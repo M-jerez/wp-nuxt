@@ -36,6 +36,7 @@ function WPNUXT_TERM_PAGE($) {
     });
 
 
+    AJAX_URL = "/content/themes/wp-nuxt/modules/run_cmd/non_wp.php";
 
     var generatingCMD = false;
     function generateCMD() {
@@ -52,7 +53,9 @@ function WPNUXT_TERM_PAGE($) {
             url: AJAX_URL + "?action=" + AJAX_CMD_GENERATE + "&mode=runner"
         }).done(function (data) {
             //TODO: finsih
+            console.log("runner");
             console.log(data);
+            generatingCMD = false;
             var success = (data.status === "success");
             if (success) {
 
@@ -69,35 +72,47 @@ function WPNUXT_TERM_PAGE($) {
             stopAnimateRunning();
             generatingCMD = false;
         });
+
+        readCMD(0);
     }
 
 
-    var readCMDFailed = false;
 
-    function readCMD() {
-        if (readCMDFailed)
+
+    function readCMD(start_line) {
+        if (!generatingCMD){
             return;
+        }
+
         setTimeout(function () {
             $.ajax({
                 type: 'GET',
                 cache: false,
-                url: AJAX_URL + "?action=" + AJAX_CMD_GENERATE + "&mode=reader"
-            }).done(function (data) {
-                //TODO: finsih
-
-                if (!finished) {
-                    readCMD()
-                } else {
-
+                url: AJAX_URL + "?action=" + AJAX_CMD_GENERATE + "&mode=reader",
+                data:{
+                    line_number : start_line
                 }
+            }).done(function (data) {
+                //TODO: finish
+                printOrdeter();
+                console.log("reader");
                 console.log(data);
+                var success = (data.status === "success");
+                if (success) {
+
+                } else {
+                    xtermError(data.message);
+                }
             }).fail(function (jqXHR, textStatus, errorThrown) {
-                //TODO
-                readCMDFailed = true;
             }).always(function () {
-                //TODO
+                readCMD(start_line + 1);
             });
-        }, 400);
+        }, 300);
+    }
+
+    var orderedresponses = {};
+    function printOrdeter(linenum){
+
     }
 
 
@@ -136,7 +151,7 @@ function WPNUXT_TERM_PAGE($) {
             "class=\"btn btn-primary btn-sm wp-nuxt-generate-site\" id=\"regenerate-site-top-bar\"  disabled>\n" +
             "    <i class=\"dashicons dashicons-image-rotate icon\"></i>\n" +
             "    nuxt generate</button></li>");
-        $("#wp-admin-bar-top-secondary").prepend(li);
+        $("#wp-admin-bar-top-secondary").append(li);
 
         li.click(generateCMD);
     }

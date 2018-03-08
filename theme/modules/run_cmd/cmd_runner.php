@@ -30,8 +30,8 @@ class cmd_runner {
 	);
 
 
-	function __construct( $shmid, $CMD, $CWD ) {
-		if(sMem::isOpenMem($shmid)){
+	function __construct( $shmid_key, $CMD, $CWD ) {
+		if(sMem::isOpenMem($shmid_key)){
 			// error: mode runner and already executing
 			utils::json_response( "fail", "command already running." );
 			return;
@@ -39,8 +39,7 @@ class cmd_runner {
 
 
 		set_time_limit( 0 );
-		$data = $this->runCommand( $shmid, $CMD, $CWD );
-		$this->exit($data);
+		$this->runCommand( $shmid_key, $CMD, $CWD );
 
 	}
 
@@ -64,7 +63,7 @@ class cmd_runner {
 	 *
 	 * @return array|null
 	 */
-	function runCommand( $shmid, $CMD, $CWD ) {
+	function runCommand( $shmid_key, $CMD, $CWD ) {
 		$descriptorspec = array(
 			0 => array( "pipe", "r" ),
 			1 => array( "pipe", "w" ),
@@ -79,10 +78,11 @@ class cmd_runner {
 			"output" => null,
 			"exit_status" => null
 		);
+		$real_shmid = 0;
 		if ( is_resource( $process ) ) {
-			$real_shmid = sMem::openMem( 0, self::$first_output, $shmid );
+			$shmid = sMem::openMem( $shmid_key);
 			$output  = $this->captureOutput($shmid, $pipes, $start_time, 1 );
-			sMem::closeMem( $real_shmid );
+			sMem::closeMem( $shmid );
 		}
 		fclose( $pipes[0] );
 		fclose( $pipes[1] );
@@ -90,8 +90,9 @@ class cmd_runner {
 
 		$data["output"] = $output;
 		$data["exit_code"] = proc_close( $process );
+		$data["shmid"] = $shmid_key;
 
-		return $data;
+		$this->exit($data);
 	}
 
 

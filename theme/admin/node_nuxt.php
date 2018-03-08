@@ -63,11 +63,11 @@ class node_nuxt {
 			if ( utils::test_nuxt_path( $nuxt_root_path ) && utils::test_node_path( $node_path ) ) {
 
 				//TODO:
-
+				$nuxt_root_path = utils::resolve_ABSPATH_path($nuxt_root_path);
 				$shmid = ftok( __FILE__, "0" );
 
 				$CWD = $nuxt_root_path;
-				$CMD = "$nuxt_root_path/node_modules/.bin/nuxt  generate";
+				$CMD = "$node_path $nuxt_root_path/node_modules/.bin/nuxt  generate";
 
 
 				if ( $_GET["mode"] == "runner" ) {

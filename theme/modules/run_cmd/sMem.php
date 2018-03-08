@@ -25,9 +25,11 @@ class sMem {
 	 *
 	 * @return bool
 	 */
-	static function isOpenMem( $shmid ) {
-		@$shid = shmop_open( $shmid, "a", 0666, 0 );
-		return !empty($shid);
+	static function isOpenMem( $shmid_key ) {
+		@$resource = shmop_open( $shmid_key+2, "a", 0666, 0 );
+		$isOpen =  !empty($resource);
+		self::closeMem($resource);
+		return $isOpen;
 	}
 
 
@@ -38,11 +40,22 @@ class sMem {
 	 *
 	 * @return mixed
 	 */
-	static function openMem( $shmid, $text ) {
-		$shmid = shmop_open( $shmid, 'c', 0755, self::$default_mem_item_size );
-		return $shmid;
+	static function openMem( $shmid_key ) {
+		$resource = shmop_open( $shmid_key, 'c', 0755, self::$default_mem_item_size );
+		return $resource;
 	}
 
+
+	/**
+	 * Open existing shared memory block
+	 * @param $shmid
+	 *
+	 * @return mixed
+	 */
+	static function openMemExisting( $shmid_key ) {
+		$resource = shmop_open( $shmid_key, 'a', 0, 0 );
+		return $resource;
+	}
 
 	static function readMem( $shmid ) {
 		$data = shmop_read( $shmid, 0,  shmop_size($shmid));
@@ -82,8 +95,10 @@ class sMem {
 	/** Delete And  Close a Shared memory Block
 	 * @param $shmid
 	 */
-	static function closeMem( $shmid ) {
-		shmop_delete( $shmid );
+	static function closeMem( $shmid ,$delete=true) {
+		if($delete){
+			shmop_delete( $shmid );
+		}
 		shmop_close( $shmid );
 	}
 

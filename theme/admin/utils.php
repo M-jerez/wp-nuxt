@@ -98,7 +98,7 @@ class utils {
 	static function saveConfig( $config ) {
 		$code = "<?php\n\n\nreturn " . var_export( $config, true ) . ";";
 
-		file_put_contents( get_template_directory() . "/wp-nuxt-config.php", $code );
+		file_put_contents( __DIR__ . "/../wp-nuxt-config.php", $code );
 	}
 
 
@@ -117,7 +117,7 @@ class utils {
 			return self::$wpn_config;
 		}
 
-		$config_file      = get_template_directory() . "/wp-nuxt-config.php";
+		$config_file      = __DIR__ . "/../wp-nuxt-config.php";
 		self::$wpn_config = include( $config_file );
 
 		if ( ! self::$wpn_config ) {
@@ -229,13 +229,14 @@ class utils {
 	 * @param $nonce_name
 	 * @param $response
 	 */
-	static function ajax_call_finish($nonce_name , $response){
+	static function ajax_call_finish($nonce_name , $response = false){
 		//set a new nonce so user can keep using ajax calls
 		setcookie($nonce_name, wp_create_nonce( $nonce_name ), time() + 3600 );
 
 		// IMPORTANT: don't forget to "exit"
 		// response output
-		echo $response;
+        if($response)
+		    echo $response;
 		exit;
 	}
 
