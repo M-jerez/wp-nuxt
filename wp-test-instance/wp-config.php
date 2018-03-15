@@ -87,17 +87,21 @@ define('WPLANG', '');
  *
  * These are required because wordpress is installed in a subdirectory.
  */
+
+$path = str_replace($_SERVER['DOCUMENT_ROOT'],"",__DIR__);
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+$port = ($_SERVER['SERVER_PORT'] != "80")?":".$_SERVER['SERVER_PORT']:"";
 if (!defined('WP_SITEURL')) {
-	define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT'].'/wordpress');
+	define('WP_SITEURL', $protocol . $_SERVER['SERVER_NAME'] .$port.$path.'/wordpress');
 }
 if (!defined('WP_HOME')) {
-	define('WP_HOME',    'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT']);
+	define('WP_HOME',    $protocol . $_SERVER['SERVER_NAME'] .$port.$path);
 }
 if (!defined('WP_CONTENT_DIR')) {
 	define('WP_CONTENT_DIR', dirname(__FILE__) . '/content');
 }
 if (!defined('WP_CONTENT_URL')) {
-	define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] .':'. $_SERVER['SERVER_PORT']. '/content');
+	define('WP_CONTENT_URL', $protocol . $_SERVER['SERVER_NAME'] .$port.$path. '/content');
 }
 
 
