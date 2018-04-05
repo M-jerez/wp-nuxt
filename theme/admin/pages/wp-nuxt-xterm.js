@@ -36,7 +36,7 @@ function WPNUXT_TERM_PAGE($) {
     });
 
 
-    AJAX_URL = "/content/themes/wp-nuxt/modules/run_cmd/non_wp.php";
+    //AJAX_URL = "/content/themes/wp-nuxt/modules/run_cmd/non_wp.php";
 
     var generatingCMD = false;
     function generateCMD() {
